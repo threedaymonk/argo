@@ -19,6 +19,11 @@ RSpec.describe 'Example schemata' do
       expect(subject.title).
         to eq('root')
     end
+
+    it 'is an object' do
+      expect(subject.type).
+        to eq(:object)
+    end
   end
 
   describe 'nested schema' do
@@ -50,5 +55,46 @@ RSpec.describe 'Example schemata' do
       expect(subject.schemas['otherSchema'].schemas['anotherSchema'].title).
         to eq('alsoNested')
     end
+
+    it 'is an object' do
+      expect(subject.type).
+        to eq(:object)
+    end
+  end
+
+  describe 'basic example' do
+    let(:schema) {
+      <<-JSON
+        {
+          "title": "Example Schema",
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "age": {
+              "description": "Age in years",
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": ["firstName", "lastName"]
+        }
+      JSON
+    }
+
+    it 'has a title' do
+      expect(subject.title).
+        to eq('Example Schema')
+    end
+
+    it 'is an object' do
+      expect(subject.type).
+        to eq(:object)
+    end
+
   end
 end

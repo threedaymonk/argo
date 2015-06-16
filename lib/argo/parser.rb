@@ -13,13 +13,17 @@ module Argo
   private
 
     def parse(subgraph)
-      Schema.new(title: title(subgraph), schemas: subschemas(subgraph))
+      Schema.new(
+        title: title(subgraph),
+        schemas: subschemas(subgraph),
+        type: type(subgraph)
+      )
     end
 
     def element_kind(key)
       case key
-      when 'title'
-        :title
+      when 'title', 'properties', 'type', 'required'
+        key.to_sym
       else
         :subschema
       end
@@ -34,6 +38,11 @@ module Argo
       subgraph.
         select { |k, _| element_kind(k) == :subschema }.
         inject({}) { |h, (k, v)| h.merge(k => parse(v)) }
+    end
+
+    def type(subgraph)
+      _, t = subgraph.find { |k, _| element_kind(k) == :type }
+      t ? t.to_sym : :object
     end
   end
 end
