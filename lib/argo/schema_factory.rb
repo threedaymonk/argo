@@ -5,20 +5,26 @@ module Argo
   class SchemaFactory
     def build(subgraph)
       Schema.new(
-        title: title(subgraph),
+        description: extract_one(subgraph, :description),
+        title: extract_one(subgraph, :title),
         schemas: subschemas(subgraph),
         type: type(subgraph),
-        properties: properties(subgraph)
+        properties: properties(subgraph),
+        spec: extract_one(subgraph, :$schema)
       )
     end
 
+    NON_SUBSCHEMA_PROPERTIES = %w[
+      $schema
+      description
+      properties
+      required
+      title
+      type
+    ]
+
     def element_kind(key)
-      case key
-      when 'title', 'properties', 'type', 'required'
-        key.to_sym
-      else
-        :subschema
-      end
+      NON_SUBSCHEMA_PROPERTIES.include?(key) ? key.to_sym : :subschema
     end
 
     def extract(subgraph, kind)
@@ -28,10 +34,6 @@ module Argo
     def extract_one(subgraph, kind, default: nil)
       _, v = subgraph.find { |k, _| element_kind(k) == kind }
       v || default
-    end
-
-    def title(subgraph)
-      extract_one(subgraph, :title)
     end
 
     def subschemas(subgraph)

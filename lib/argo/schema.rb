@@ -1,12 +1,27 @@
 module Argo
   class Schema
-    def initialize(title: nil, schemas: {}, type: :object, properties: [])
-      @title = title.freeze
+    def initialize(
+      description: nil,
+      properties: [],
+      schemas: {},
+      spec: nil,
+      title: nil,
+      type: :object
+    )
+      @description = description.freeze
+      @properties = properties.freeze
       @schemas = schemas.freeze
+      @spec = spec.freeze
+      @title = title.freeze
       @type = type
-      @properties = properties
     end
 
-    attr_reader :title, :schemas, :type, :properties
+    attr_reader \
+      :description,
+      :properties,
+      :schemas,
+      :spec,
+      :title,
+      :type
   end
 end

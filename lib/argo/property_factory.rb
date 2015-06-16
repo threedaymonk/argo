@@ -1,18 +1,21 @@
 require 'argo/string_property'
 require 'argo/integer_property'
+require 'argo/number_property'
+require 'argo/array_property'
 
 module Argo
   class PropertyFactory
-    def initialize(required_fields)
+    def initialize(required_fields = [])
       @required_fields = required_fields
     end
 
     def build(name, body)
       class_for_type(body['type']).new(
+        constraints: constraints(body),
+        description: body['description'],
         name: name,
         required: required?(name),
-        description: body['description'],
-        constraints: constraints(body)
+        **additional_properties(body)
       )
     end
 
@@ -24,14 +27,36 @@ module Argo
         StringProperty
       when 'integer'
         IntegerProperty
+      when 'number'
+        NumberProperty
+      when 'array'
+        ArrayProperty
       end
+    end
+
+    def additional_properties(body)
+      case body['type']
+      when 'array'
+        additional_properties_for_array(body)
+      else
+        {}
+      end
+    end
+
+    def additional_properties_for_array(body)
+      { items: PropertyFactory.new.build('item', body['items']) }
     end
 
     def required?(name)
       @required_fields.include?(name)
     end
 
-    NON_CONSTRAINT_PROPERTIES = %w[ type description ]
+    NON_CONSTRAINT_PROPERTIES = %w[
+      description
+      items
+      type
+    ]
+
     def constraints(hash)
       hash.
         reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.

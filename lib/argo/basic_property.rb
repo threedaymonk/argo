@@ -1,13 +1,22 @@
 module Argo
   class BasicProperty
-    def initialize(name:, description: nil, required: false, constraints: {})
-      @name = name.freeze
-      @description = description.freeze
+    def initialize(
+      constraints: {},
+      description: nil,
+      name:,
+      required: false
+    )
       @constraints = constraints.freeze
+      @description = description.freeze
+      @name = name.freeze
       @required = !!required
     end
 
-    attr_reader :name, :description, :required, :constraints
+    attr_reader \
+      :constraints,
+      :description,
+      :name,
+      :required
     alias_method :required?, :required
   end
 end
