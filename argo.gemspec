@@ -15,6 +15,7 @@ spec = Gem::Specification.new do |s|
   s.require_path     = "lib"
   s.test_files       = Dir["test/*_test.rb"]
   s.has_rdoc         = true
+  s.extra_rdoc_files = %w[COPYING.txt]
   s.add_development_dependency "rake", "~> 0"
   s.add_development_dependency "rspec", "~> 3.0.0"
 end
