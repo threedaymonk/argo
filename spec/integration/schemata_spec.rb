@@ -2,6 +2,10 @@ require 'argo/parser'
 require 'json'
 
 RSpec.describe 'Example schemata' do
+  let(:schema) {
+    File.read(File.expand_path("../../fixtures/#{schema_name}.json", __FILE__))
+  }
+
   let(:root) {
     Argo::Parser.new(JSON.parse(schema)).root
   }
@@ -9,15 +13,12 @@ RSpec.describe 'Example schemata' do
   subject { root }
 
   describe 'simplest schema' do
-    let(:schema) {
-      <<-JSON
-        {
-          "title": "root"
-        }
-      JSON
-    }
+    let(:schema_name) { 'simplest' }
 
-    example { expect(subject.title).  to eq('root') }
+    it 'has a title' do
+      expect(subject.title).
+        to eq('root')
+    end
 
     it 'is an object' do
       expect(subject.type).
@@ -26,19 +27,7 @@ RSpec.describe 'Example schemata' do
   end
 
   describe 'nested schema' do
-    let(:schema) {
-      <<-JSON
-        {
-          "title": "root",
-          "otherSchema": {
-            "title": "nested",
-            "anotherSchema": {
-              "title": "alsoNested"
-            }
-          }
-        }
-      JSON
-    }
+    let(:schema_name) { 'nested' }
 
     it 'has a title' do
       expect(subject.title).
@@ -62,28 +51,7 @@ RSpec.describe 'Example schemata' do
   end
 
   describe 'basic example' do
-    let(:schema) {
-      <<-JSON
-        {
-          "title": "Example Schema",
-          "type": "object",
-          "properties": {
-            "firstName": {
-              "type": "string"
-            },
-            "lastName": {
-              "type": "string"
-            },
-            "age": {
-              "description": "Age in years",
-              "type": "integer",
-              "minimum": 0
-            }
-          },
-          "required": ["firstName", "lastName"]
-        }
-      JSON
-    }
+    let(:schema_name) { 'basic_example' }
 
     it 'has a title' do
       expect(subject.title).

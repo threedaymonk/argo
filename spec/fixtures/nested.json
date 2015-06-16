@@ -1,0 +1,9 @@
+{
+  "title": "root",
+  "otherSchema": {
+    "title": "nested",
+    "anotherSchema": {
+      "title": "alsoNested"
+    }
+  }
+}
