@@ -2,9 +2,11 @@ require 'argo/parser'
 require 'json'
 
 RSpec.describe 'Example schemata' do
-  subject {
+  let(:root) {
     Argo::Parser.new(JSON.parse(schema)).root
   }
+
+  subject { root }
 
   describe 'simplest schema' do
     let(:schema) {
@@ -15,10 +17,7 @@ RSpec.describe 'Example schemata' do
       JSON
     }
 
-    it 'has a title' do
-      expect(subject.title).
-        to eq('root')
-    end
+    example { expect(subject.title).  to eq('root') }
 
     it 'is an object' do
       expect(subject.type).
@@ -96,5 +95,48 @@ RSpec.describe 'Example schemata' do
         to eq(:object)
     end
 
+    describe 'properties' do
+      subject { root.properties }
+
+      it 'has three items' do
+        expect(subject.length).to eq(3)
+      end
+
+      describe 'first' do
+        subject { root.properties.first }
+
+        it 'has a name' do
+          expect(subject.name).to eq('firstName')
+        end
+
+        it 'has no description' do
+          expect(subject.description).to be_nil
+        end
+
+        it 'is required' do
+          expect(subject).to be_required
+        end
+      end
+
+      describe 'last' do
+        subject { root.properties.last }
+
+        it 'has a name' do
+          expect(subject.name).to eq('age')
+        end
+
+        it 'has a description' do
+          expect(subject.description).to eq('Age in years')
+        end
+
+        it 'is not required' do
+          expect(subject).not_to be_required
+        end
+
+        it 'has constraints' do
+          expect(subject.constraints).to eq({ minimum: 0 })
+        end
+      end
+    end
   end
 end
