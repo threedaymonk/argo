@@ -41,7 +41,9 @@ module Argo
     end
 
     def explicit_class(body)
-      TYPE_MAP.fetch(body['type'])
+      type = body['type']
+      raise "Unknown property type '#{type}'" unless TYPE_MAP.key?(type)
+      TYPE_MAP.fetch(type)
     end
 
     def implicit_class(body)
