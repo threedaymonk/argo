@@ -5,6 +5,19 @@ require 'argo/array_property'
 
 module Argo
   class PropertyFactory
+    NON_CONSTRAINT_PROPERTIES = %w[
+      description
+      items
+      type
+    ]
+
+    TYPE_MAP = {
+      'string' => StringProperty,
+      'integer' => IntegerProperty,
+      'number' => NumberProperty,
+      'array' => ArrayProperty
+    }
+
     def initialize(required_fields = [])
       @required_fields = required_fields
     end
@@ -24,27 +37,19 @@ module Argo
   private
 
     def class_for_type(body)
-      case body['type']
-      when 'string'
-        StringProperty
-      when 'integer'
-        IntegerProperty
-      when 'number'
-        NumberProperty
-      when 'array'
-        ArrayProperty
-      else
-        if body['enum']
-          StringProperty
-        else
-          raise "Unknown property type '#{type}'"
-        end
-      end
+      implicit_class(body) || explicit_class(body)
+    end
+
+    def explicit_class(body)
+      TYPE_MAP.fetch(body['type'])
+    end
+
+    def implicit_class(body)
+      body.key?('enum') && StringProperty
     end
 
     def additional_properties(body)
-      case body['type']
-      when 'array'
+      if class_for_type(body) == ArrayProperty
         additional_properties_for_array(body)
       else
         {}
@@ -58,12 +63,6 @@ module Argo
     def required?(name)
       @required_fields.include?(name)
     end
-
-    NON_CONSTRAINT_PROPERTIES = %w[
-      description
-      items
-      type
-    ]
 
     def constraints(hash)
       hash.
