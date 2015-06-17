@@ -3,14 +3,15 @@ require 'argo/property_factory'
 
 module Argo
   class SchemaFactory
-    def build(subgraph)
+    def build(subgraph, route = [])
       Schema.new(
         description: extract_one(subgraph, :description),
         title: extract_one(subgraph, :title),
-        schemas: subschemas(subgraph),
+        schemas: subschemas(subgraph, route),
         type: type(subgraph),
         properties: properties(subgraph),
-        spec: extract_one(subgraph, :$schema)
+        spec: extract_one(subgraph, :$schema),
+        route: route
       )
     end
 
@@ -38,9 +39,9 @@ module Argo
       v || default
     end
 
-    def subschemas(subgraph)
+    def subschemas(subgraph, route)
       extract(subgraph, :subschema).
-        inject({}) { |h, (k, v)| h.merge(k => build(v)) }
+        inject({}) { |h, (k, v)| h.merge(k => build(v, route + [k])) }
     end
 
     def type(subgraph)

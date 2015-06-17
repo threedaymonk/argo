@@ -7,6 +7,7 @@ module Argo
     schemas: {},
     spec: nil,
     title: nil,
-    type: :object
+    type: :object,
+    route: nil
   )
 end

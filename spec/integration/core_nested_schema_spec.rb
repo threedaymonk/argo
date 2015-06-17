@@ -11,18 +11,35 @@ RSpec.describe 'Core spec section 3.4 nested schema' do
   subject { root }
 
   it 'has a title' do
-    expect(subject.title).
-      to eq('root')
+    expect(subject.title).to eq('root')
   end
 
-  it 'has a nested schema with a title' do
-    expect(subject.schemas['otherSchema'].title).
-      to eq('nested')
+  it 'knows its route' do
+    expect(subject.route).to eq([])
   end
 
-  it 'has a nested schema with a nested schema with a title' do
-    expect(subject.schemas['otherSchema'].schemas['anotherSchema'].title).
-      to eq('alsoNested')
+  describe 'nested schema' do
+    subject { root.schemas['otherSchema'] }
+
+    it 'has a title' do
+      expect(subject.title).to eq('nested')
+    end
+
+    it 'knows its route' do
+      expect(subject.route).to eq(%w[ otherSchema ])
+    end
+  end
+
+  describe 'doubly nested schema' do
+    subject { root.schemas['otherSchema'].schemas['anotherSchema'] }
+
+    it 'has a title' do
+      expect(subject.title).to eq('alsoNested')
+    end
+
+    it 'knows its route' do
+      expect(subject.route).to eq(%w[ otherSchema anotherSchema ])
+    end
   end
 
   it 'is an object' do
