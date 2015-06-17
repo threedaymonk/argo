@@ -35,7 +35,7 @@ RSpec.describe 'tmpfs' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ enum: %w[ tmpfs ] })
+        expect(subject.constraints).to eq(enum: %w[ tmpfs ])
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'tmpfs' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ minimum: 16, maximum: 512 })
+        expect(subject.constraints).to eq(minimum: 16, maximum: 512)
       end
     end
   end

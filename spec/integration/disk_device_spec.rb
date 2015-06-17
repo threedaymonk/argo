@@ -35,7 +35,7 @@ RSpec.describe 'diskDevice' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ enum: %w[ disk ] })
+        expect(subject.constraints).to eq(enum: %w[ disk ])
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'diskDevice' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ pattern: '^/dev/[^/]+(/[^/]+)*$' })
+        expect(subject.constraints).to eq(pattern: '^/dev/[^/]+(/[^/]+)*$')
       end
     end
   end

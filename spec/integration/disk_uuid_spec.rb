@@ -35,7 +35,7 @@ RSpec.describe 'diskUUID' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ enum: %w[ disk ] })
+        expect(subject.constraints).to eq(enum: %w[ disk ])
       end
     end
 
@@ -53,9 +53,9 @@ RSpec.describe 'diskUUID' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({
+        expect(subject.constraints).to eq(
           pattern: '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
-        })
+        )
       end
     end
   end

@@ -63,7 +63,7 @@ RSpec.describe 'Example schemata' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ minimum: 0 })
+        expect(subject.constraints).to eq(minimum: 0)
       end
     end
   end

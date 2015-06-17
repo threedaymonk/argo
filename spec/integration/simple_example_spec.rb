@@ -95,7 +95,7 @@ RSpec.describe 'Example schemata' do
 
       it 'has constraints' do
         expect(subject.constraints).
-          to eq({ minimum: 0, exclusiveMinimum: true })
+          to eq(minimum: 0, exclusiveMinimum: true)
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe 'Example schemata' do
 
       it 'has constraints' do
         expect(subject.constraints).
-          to eq({ minItems: 1, uniqueItems: true })
+          to eq(minItems: 1, uniqueItems: true)
       end
 
       describe 'items' do

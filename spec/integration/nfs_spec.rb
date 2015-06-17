@@ -35,7 +35,7 @@ RSpec.describe 'nfs' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ enum: %w[ nfs ] })
+        expect(subject.constraints).to eq(enum: %w[ nfs ])
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'nfs' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({ pattern: '^(/[^/]+)+$' })
+        expect(subject.constraints).to eq(pattern: '^(/[^/]+)+$')
       end
     end
 
@@ -71,15 +71,14 @@ RSpec.describe 'nfs' do
       end
 
       it 'has constraints' do
-        expect(subject.constraints).to eq({
+        expect(subject.constraints).to eq(
           oneOf: [
             { format: 'host-name' },
             { format: 'ipv4' },
             { format: 'ipv6' }
           ]
-        })
+        )
       end
     end
   end
 end
-
