@@ -18,4 +18,6 @@ spec = Gem::Specification.new do |s|
   s.extra_rdoc_files = %w[COPYING.txt]
   s.add_development_dependency "rake", "~> 0"
   s.add_development_dependency "rspec", "~> 3.0.0"
+  s.add_development_dependency "rubocop"
+  s.add_development_dependency "rubocop-rspec"
 end
