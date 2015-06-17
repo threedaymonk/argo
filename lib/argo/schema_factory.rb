@@ -18,6 +18,7 @@ module Argo
       $schema
       additionalProperties
       description
+      id
       properties
       required
       title

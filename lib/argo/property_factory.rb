@@ -1,7 +1,9 @@
-require 'argo/string_property'
+require 'argo/array_property'
+require 'argo/boolean_property'
 require 'argo/integer_property'
 require 'argo/number_property'
-require 'argo/array_property'
+require 'argo/object_property'
+require 'argo/string_property'
 
 module Argo
   class PropertyFactory
@@ -12,10 +14,12 @@ module Argo
     ]
 
     TYPE_MAP = {
-      'string' => StringProperty,
+      'array' => ArrayProperty,
+      'boolean' => BooleanProperty,
       'integer' => IntegerProperty,
       'number' => NumberProperty,
-      'array' => ArrayProperty
+      'object' => ObjectProperty,
+      'string' => StringProperty
     }
 
     def initialize(required_fields = [])
