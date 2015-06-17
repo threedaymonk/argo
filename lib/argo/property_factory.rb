@@ -68,8 +68,20 @@ module Argo
     def constraints(hash)
       hash.
         reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.
-        map { |k, v| [k.to_sym, v.freeze] }.
-        to_h
+        map { |k, v| [k.to_sym, symbolize(v)] }.
+        to_h.
+        freeze
+    end
+
+    def symbolize(obj)
+      case obj
+      when Hash
+        obj.map { |k, v| [k.to_sym, symbolize(v)] }.to_h.freeze
+      when Array
+        obj.map { |v| symbolize(v) }.freeze
+      else
+        obj.freeze
+      end
     end
   end
 end
