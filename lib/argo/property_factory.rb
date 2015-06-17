@@ -10,19 +10,21 @@ module Argo
     end
 
     def build(name, body)
-      class_for_type(body['type']).new(
+      class_for_type(body).new(
         constraints: constraints(body),
         description: body['description'],
         name: name,
         required: required?(name),
         **additional_properties(body)
       )
+    rescue => e
+      raise e, e.message + ' in ' + body.inspect
     end
 
   private
 
-    def class_for_type(type)
-      case type
+    def class_for_type(body)
+      case body['type']
       when 'string'
         StringProperty
       when 'integer'
@@ -31,6 +33,12 @@ module Argo
         NumberProperty
       when 'array'
         ArrayProperty
+      else
+        if body['enum']
+          StringProperty
+        else
+          raise "Unknown property type '#{type}'"
+        end
       end
     end
 

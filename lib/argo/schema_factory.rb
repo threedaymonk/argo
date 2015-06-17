@@ -16,6 +16,7 @@ module Argo
 
     NON_SUBSCHEMA_PROPERTIES = %w[
       $schema
+      additionalProperties
       description
       properties
       required
