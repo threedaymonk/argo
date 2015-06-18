@@ -30,7 +30,7 @@ module Argo
       @required_fields = required_fields
     end
 
-    def_delegators :@dereferencer, :dereference, :dereferenceable?
+    def_delegators :@dereferencer, :dereference, :reference?
 
     def build(name, body)
       class_for_type(body).new(
@@ -68,7 +68,7 @@ module Argo
 
     def additional_properties_for_array(body)
       items = body.fetch('items')
-      if dereferenceable?(items)
+      if reference?(items)
         value = dereference(items)
       else
         factory = PropertyFactory.new(@dereferencer)
@@ -94,7 +94,7 @@ module Argo
     def symbolize_object(obj)
       case obj
       when Hash
-        if dereferenceable?(obj)
+        if reference?(obj)
           dereference(obj)
         else
           obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze

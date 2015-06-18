@@ -1,0 +1,16 @@
+{
+    "properties": {
+        "arrest": {
+            "$ref": "#/definitions/Thing"
+        }
+    },
+    "definitions": {
+        "Thing": {
+            "properties": {
+                "type": {
+                    "enum": [ "Thing" ]
+                }
+            }
+        }
+    }
+}

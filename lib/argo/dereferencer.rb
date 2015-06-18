@@ -19,7 +19,7 @@ module Argo
       }
     end
 
-    def dereferenceable?(hash)
+    def reference?(hash)
       hash.key?('$ref')
     end
   end

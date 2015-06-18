@@ -1,11 +1,16 @@
+require 'forwardable'
 require 'argo/schema'
 require 'argo/property_factory'
 
 module Argo
   class SchemaFactory
+    extend Forwardable
+
     def initialize(dereferencer)
       @dereferencer = dereferencer
     end
+
+    def_delegators :@dereferencer, :dereference, :reference?
 
     def build(subgraph, route = [])
       Schema.new(
@@ -56,7 +61,7 @@ module Argo
       required_fields = extract_one(subgraph, :required, default: [])
       factory = PropertyFactory.new(@dereferencer, required_fields)
       extract_one(subgraph, :properties, default: {}).
-        map { |k, v| factory.build(k, v) }
+        map { |k, v| reference?(v) ? dereference(v) : factory.build(k, v) }
     end
   end
 end
