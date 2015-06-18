@@ -1,7 +1,16 @@
 {
     "properties": {
-        "arrest": {
+        "thing": {
             "$ref": "#/definitions/Thing"
+        },
+        "others": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "oneOf": [
+                    { "$ref": "#/definitions/Thing" }
+                ]
+            }
         }
     },
     "definitions": {

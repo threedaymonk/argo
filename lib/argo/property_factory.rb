@@ -45,17 +45,26 @@ module Argo
   private
 
     def class_for_type(body)
-      implicit_class(body) || explicit_class(body)
+      klass = explicit_class(body) || implicit_class(body)
+      raise "No type found in #{body.inspect}" unless klass
+      klass
     end
 
     def explicit_class(body)
+      return nil unless body.key?('type')
       type = body.fetch('type')
       raise "Unknown property type '#{type}'" unless TYPE_MAP.key?(type)
       TYPE_MAP.fetch(type)
     end
 
     def implicit_class(body)
-      body.key?('enum') && StringProperty
+      if body.key?('enum')
+        StringProperty
+      elsif body.key?('oneOf')
+        ObjectProperty
+      else
+        nil
+      end
     end
 
     def additional_properties(body)
