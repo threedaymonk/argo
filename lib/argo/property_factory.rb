@@ -76,7 +76,7 @@ module Argo
     end
 
     def additional_properties_for_array(body)
-      items = body.fetch('items')
+      items = [body.fetch('items')].flatten.first
       if reference?(items)
         value = dereference(items)
       else

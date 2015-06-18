@@ -1,17 +1,23 @@
 {
     "properties": {
-        "defendants": {
+        "a": {
             "type": "array",
-            "items": { "$ref": "#/definitions/Defendant" },
+            "items": { "$ref": "#/definitions/Thing" },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "b": {
+            "type": "array",
+            "items": [ { "$ref": "#/definitions/Thing" } ],
             "minItems": 1,
             "uniqueItems": true
         }
     },
     "definitions": {
-        "Defendant": {
+        "Thing": {
             "type": "object",
             "properties": {
-                "defendant_id": {
+                "thing_id": {
                     "type": "string"
                 }
             }
