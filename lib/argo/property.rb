@@ -1,7 +1,7 @@
 require 'argo/immutable_keyword_struct'
 
 module Argo
-  BasicProperty = ImmutableKeywordStruct.new(
+  Property = ImmutableKeywordStruct.new(
     constraints: {},
     description: nil,
     name: nil,

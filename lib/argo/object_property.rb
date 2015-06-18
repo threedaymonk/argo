@@ -1,6 +1,6 @@
-require 'argo/basic_property'
+require 'argo/property'
 
 module Argo
-  class ObjectProperty < BasicProperty
+  class ObjectProperty < Property
   end
 end

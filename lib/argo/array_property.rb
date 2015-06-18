@@ -1,7 +1,7 @@
-require 'argo/basic_property'
+require 'argo/property'
 
 module Argo
-  class ArrayProperty < BasicProperty
+  class ArrayProperty < Property
     def initialize(items:, **kwargs)
       super(**kwargs)
       @items = items
