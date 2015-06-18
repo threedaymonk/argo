@@ -48,7 +48,7 @@ Metrics/MethodLength:
     - 'spec/**/*'
 
 Style/RegexpLiteral:
-  EnforcedStyle: percent_r
+  Enabled: false
 
 # I'm happy with raise, thanks.
 Style/SignalException:
