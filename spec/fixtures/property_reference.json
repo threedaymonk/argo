@@ -1,13 +1,21 @@
 {
     "properties": {
-        "thing": {
+        "a": {
             "$ref": "#/definitions/Thing"
         },
-        "others": {
+        "b": {
             "type": "array",
             "minItems": 1,
             "items": {
                 "oneOf": [
+                    { "$ref": "#/definitions/Thing" }
+                ]
+            }
+        },
+        "c": {
+            "type": "array",
+            "items": {
+                "anyOf": [
                     { "$ref": "#/definitions/Thing" }
                 ]
             }

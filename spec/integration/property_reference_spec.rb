@@ -18,4 +18,10 @@ RSpec.describe 'property reference' do
 
     it { is_expected.to be_kind_of(Argo::ArrayProperty) }
   end
+
+  describe 'third property' do
+    subject { super().properties.fetch(2) }
+
+    it { is_expected.to be_kind_of(Argo::ArrayProperty) }
+  end
 end

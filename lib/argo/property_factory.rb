@@ -60,7 +60,7 @@ module Argo
     def implicit_class(body)
       if body.key?('enum')
         StringProperty
-      elsif body.key?('oneOf')
+      elsif (body.keys & %w[ oneOf anyOf ]).any?
         ObjectProperty
       else
         nil
