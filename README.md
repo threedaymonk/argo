@@ -14,6 +14,6 @@ json_schema = File.read('spec/fixtures/entry-schema.json')
 schema = Argo::Parser.new(JSON.parse(json_schema)).root
 
 schema.description # => "schema for an fstab entry"
-schema.properties.map(&:name) # => ["storage", "fstype", "options", "readonly"]
-schema.properties[1].constraints # => {:enum=>["ext3", "ext4", "btrfs"]}
+schema.properties.keys # => ["storage", "fstype", "options", "readonly"]
+schema.properties['fstype'].constraints # => {:enum=>["ext3", "ext4", "btrfs"]}
 ```
