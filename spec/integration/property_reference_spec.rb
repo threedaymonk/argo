@@ -7,20 +7,20 @@ RSpec.describe 'property reference' do
     Argo::Parser.new(JSON.parse(json)).root
   }
 
-  describe 'first property' do
-    subject { super().properties.fetch(0) }
+  describe 'a' do
+    subject { super().properties.fetch('a') }
 
     it { is_expected.to be_kind_of(Argo::Schema) }
   end
 
-  describe 'second property' do
-    subject { super().properties.fetch(1) }
+  describe 'b' do
+    subject { super().properties.fetch('b') }
 
     it { is_expected.to be_kind_of(Argo::ArrayProperty) }
   end
 
-  describe 'third property' do
-    subject { super().properties.fetch(2) }
+  describe 'c' do
+    subject { super().properties.fetch('c') }
 
     it { is_expected.to be_kind_of(Argo::ArrayProperty) }
   end

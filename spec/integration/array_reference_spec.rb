@@ -7,8 +7,8 @@ RSpec.describe 'array reference' do
     Argo::Parser.new(JSON.parse(json)).root
   }
 
-  describe 'first property with reference' do
-    subject { super().properties.fetch(0) }
+  describe 'property with reference' do
+    subject { super().properties.fetch('a') }
 
     it { is_expected.to be_kind_of(Argo::ArrayProperty) }
 
@@ -16,13 +16,13 @@ RSpec.describe 'array reference' do
       subject { super().items }
 
       it 'has one property' do
-        expect(subject.properties.map(&:name)).to eq(%w[ thing_id ])
+        expect(subject.properties.keys).to eq(%w[ thing_id ])
       end
     end
   end
 
-  describe 'second property with array containing one reference' do
-    subject { super().properties.fetch(0) }
+  describe 'property with array containing one reference' do
+    subject { super().properties.fetch('b') }
 
     it { is_expected.to be_kind_of(Argo::ArrayProperty) }
 
@@ -30,7 +30,7 @@ RSpec.describe 'array reference' do
       subject { super().items }
 
       it 'has one property' do
-        expect(subject.properties.map(&:name)).to eq(%w[ thing_id ])
+        expect(subject.properties.keys).to eq(%w[ thing_id ])
       end
     end
   end

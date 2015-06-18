@@ -4,7 +4,6 @@ module Argo
   Property = ImmutableKeywordStruct.new(
     constraints: {},
     description: nil,
-    name: nil,
     required: false
   ) do
     alias_method :required?, :required

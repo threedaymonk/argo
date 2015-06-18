@@ -20,14 +20,10 @@ RSpec.describe 'nfs' do
       expect(subject.length).to eq(3)
     end
 
-    describe 'first (type)' do
-      subject { super().fetch(0) }
+    describe 'type' do
+      subject { super().fetch('type') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('type')
-      end
 
       it 'is required' do
         expect(subject).to be_required
@@ -38,14 +34,10 @@ RSpec.describe 'nfs' do
       end
     end
 
-    describe 'second (remotePath)' do
-      subject { super().fetch(1) }
+    describe 'remotePath' do
+      subject { super().fetch('remotePath') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('remotePath')
-      end
 
       it 'is required' do
         expect(subject).to be_required
@@ -56,14 +48,10 @@ RSpec.describe 'nfs' do
       end
     end
 
-    describe 'third (server)' do
-      subject { super().fetch(2) }
+    describe 'server' do
+      subject { super().fetch('server') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('server')
-      end
 
       it 'is required' do
         expect(subject).to be_required

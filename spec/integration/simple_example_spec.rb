@@ -30,14 +30,10 @@ RSpec.describe 'Example schemata' do
       expect(subject.length).to eq(4)
     end
 
-    describe 'first (id)' do
-      subject { super().fetch(0) }
+    describe 'id' do
+      subject { super().fetch('id') }
 
       it { is_expected.to be_kind_of(Argo::IntegerProperty) }
-
-      it 'is named "id"' do
-        expect(subject.name).to eq('id')
-      end
 
       it 'has a description' do
         expect(subject.description).
@@ -53,14 +49,10 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'second (name)' do
-      subject { super().fetch(1) }
+    describe 'name' do
+      subject { super().fetch('name') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'is named "name"' do
-        expect(subject.name).to eq('name')
-      end
 
       it 'has a description' do
         expect(subject.description).to eq('Name of the product')
@@ -75,14 +67,10 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'third (price)' do
-      subject { super().fetch(2) }
+    describe 'price' do
+      subject { super().fetch('price') }
 
       it { is_expected.to be_kind_of(Argo::NumberProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('price')
-      end
 
       it 'has no description' do
         expect(subject.description).to be_nil
@@ -98,14 +86,10 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'fourth (tags)' do
-      subject { super().fetch(3) }
+    describe 'tags' do
+      subject { super().fetch('tags') }
 
       it { is_expected.to be_kind_of(Argo::ArrayProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('tags')
-      end
 
       it 'has no description' do
         expect(subject.description).to be_nil

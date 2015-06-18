@@ -32,11 +32,10 @@ module Argo
 
     def_delegators :@dereferencer, :dereference, :reference?
 
-    def build(name, body)
+    def build(body, name: nil)
       class_for_type(body).new(
         constraints: constraints(body),
         description: body['description'],
-        name: name,
         required: required?(name),
         **additional_properties(body)
       )
@@ -81,7 +80,7 @@ module Argo
         value = dereference(items)
       else
         factory = PropertyFactory.new(@dereferencer)
-        value = factory.build('item', items)
+        value = factory.build(items)
       end
       { items: value }
     end

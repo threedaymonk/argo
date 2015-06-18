@@ -21,14 +21,10 @@ RSpec.describe 'entry-schema' do
       expect(subject.length).to eq(4)
     end
 
-    describe 'first (storage)' do
-      subject { super().fetch(0) }
+    describe 'storage' do
+      subject { super().fetch('storage') }
 
       it { is_expected.to be_kind_of(Argo::ObjectProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('storage')
-      end
 
       it 'is required' do
         expect(subject).to be_required
@@ -53,34 +49,26 @@ RSpec.describe 'entry-schema' do
               expect(subject.length).to eq(2)
             end
 
-            describe 'first (type)' do
-              subject { super().fetch(0) }
+            describe 'type' do
+              subject { super().fetch('type') }
 
-              it 'is named "type"' do
-                expect(subject.name).to eq('type')
-              end
+              it { is_expected.to be_kind_of(Argo::StringProperty) }
             end
 
-            describe 'second (device)' do
-              subject { super().fetch(1) }
+            describe 'device' do
+              subject { super().fetch('device') }
 
-              it 'is named "device"' do
-                expect(subject.name).to eq('device')
-              end
+              it { is_expected.to be_kind_of(Argo::StringProperty) }
             end
           end
         end
       end
     end
 
-    describe 'second' do
-      subject { super().fetch(1) }
+    describe 'fstype' do
+      subject { super().fetch('fstype') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('fstype')
-      end
 
       it 'is not required' do
         expect(subject).not_to be_required
@@ -91,14 +79,10 @@ RSpec.describe 'entry-schema' do
       end
     end
 
-    describe 'third' do
-      subject { super().fetch(2) }
+    describe 'options' do
+      subject { super().fetch('options') }
 
       it { is_expected.to be_kind_of(Argo::ArrayProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('options')
-      end
 
       describe 'items' do
         subject { super().items }
@@ -118,14 +102,10 @@ RSpec.describe 'entry-schema' do
       end
     end
 
-    describe 'fourth' do
-      subject { super().fetch(3) }
+    describe 'readonly' do
+      subject { super().fetch('readonly') }
 
       it { is_expected.to be_kind_of(Argo::BooleanProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('readonly')
-      end
 
       it 'is not required' do
         expect(subject).not_to be_required

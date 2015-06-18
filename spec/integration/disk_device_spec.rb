@@ -20,14 +20,10 @@ RSpec.describe 'diskDevice' do
       expect(subject.length).to eq(2)
     end
 
-    describe 'first (type)' do
-      subject { super().fetch(0) }
+    describe 'type' do
+      subject { super().fetch('type') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('type')
-      end
 
       it 'is required' do
         expect(subject).to be_required
@@ -38,14 +34,10 @@ RSpec.describe 'diskDevice' do
       end
     end
 
-    describe 'second (device)' do
-      subject { super().fetch(1) }
+    describe 'device' do
+      subject { super().fetch('device') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('device')
-      end
 
       it 'is required' do
         expect(subject).to be_required

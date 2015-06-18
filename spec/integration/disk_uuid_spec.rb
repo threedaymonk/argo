@@ -20,14 +20,10 @@ RSpec.describe 'diskUUID' do
       expect(subject.length).to eq(2)
     end
 
-    describe 'first (type)' do
-      subject { super().fetch(0) }
+    describe 'type' do
+      subject { super().fetch('type') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('type')
-      end
 
       it 'is required' do
         expect(subject).to be_required
@@ -38,14 +34,10 @@ RSpec.describe 'diskUUID' do
       end
     end
 
-    describe 'second (label)' do
-      subject { super().fetch(1) }
+    describe 'label' do
+      subject { super().fetch('label') }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
-
-      it 'has a name' do
-        expect(subject.name).to eq('label')
-      end
 
       it 'is required' do
         expect(subject).to be_required

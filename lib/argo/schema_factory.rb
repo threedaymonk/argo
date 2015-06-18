@@ -62,7 +62,10 @@ module Argo
       required_fields = extract_one(subgraph, :required, default: [])
       factory = PropertyFactory.new(@dereferencer, required_fields)
       extract_one(subgraph, :properties, default: {}).
-        map { |k, v| reference?(v) ? dereference(v) : factory.build(k, v) }
+        map { |k, v|
+          [k, reference?(v) ? dereference(v) : factory.build(v, name: k)]
+        }.
+        to_h
     end
   end
 end
