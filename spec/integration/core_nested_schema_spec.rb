@@ -9,33 +9,33 @@ RSpec.describe 'Core spec section 3.4 nested schema' do
     Argo::Parser.new(JSON.parse(path)).root
   }
 
-  it 'has a title' do
+  it 'has the title "root"' do
     expect(subject.title).to eq('root')
   end
 
-  it 'knows its route' do
+  it 'has an empty route' do
     expect(subject.route).to eq([])
   end
 
   describe 'nested schema' do
     subject { super().schemas.fetch('otherSchema') }
 
-    it 'has a title' do
+    it 'has the title "nested"' do
       expect(subject.title).to eq('nested')
     end
 
-    it 'knows its route' do
+    it 'has a one-element route' do
       expect(subject.route).to eq(%w[ otherSchema ])
     end
 
     describe 'doubly nested schema' do
       subject { super().schemas.fetch('anotherSchema') }
 
-      it 'has a title' do
+      it 'has the title "alsoNested"' do
         expect(subject.title).to eq('alsoNested')
       end
 
-      it 'knows its route' do
+      it 'has a two-element route' do
         expect(subject.route).to eq(%w[ otherSchema anotherSchema ])
       end
     end

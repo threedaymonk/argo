@@ -21,7 +21,7 @@ RSpec.describe 'entry-schema' do
       expect(subject.length).to eq(4)
     end
 
-    describe 'first' do
+    describe 'first (storage)' do
       subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::ObjectProperty) }
@@ -53,7 +53,7 @@ RSpec.describe 'entry-schema' do
               expect(subject.length).to eq(2)
             end
 
-            describe 'first' do
+            describe 'first (type)' do
               subject { super().fetch(0) }
 
               it 'is named "type"' do
@@ -61,7 +61,7 @@ RSpec.describe 'entry-schema' do
               end
             end
 
-            describe 'second' do
+            describe 'second (device)' do
               subject { super().fetch(1) }
 
               it 'is named "device"' do
@@ -86,7 +86,7 @@ RSpec.describe 'entry-schema' do
         expect(subject).not_to be_required
       end
 
-      it 'has constraints' do
+      it 'has an enum constraint' do
         expect(subject.constraints).to eq(enum: %w[ ext3 ext4 btrfs ])
       end
     end
@@ -110,7 +110,7 @@ RSpec.describe 'entry-schema' do
         expect(subject).not_to be_required
       end
 
-      it 'has constraints' do
+      it 'has minimum items and uniqueness constraints' do
         expect(subject.constraints).to eq(
           min_items: 1,
           unique_items: true

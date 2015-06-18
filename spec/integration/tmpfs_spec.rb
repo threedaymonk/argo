@@ -20,7 +20,7 @@ RSpec.describe 'tmpfs' do
       expect(subject.length).to eq(2)
     end
 
-    describe 'first' do
+    describe 'first (type)' do
       subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
@@ -38,7 +38,7 @@ RSpec.describe 'tmpfs' do
       end
     end
 
-    describe 'second' do
+    describe 'second (sizeInMB)' do
       subject { super().fetch(1) }
 
       it { is_expected.to be_kind_of(Argo::IntegerProperty) }

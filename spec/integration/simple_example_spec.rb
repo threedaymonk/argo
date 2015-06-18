@@ -30,12 +30,12 @@ RSpec.describe 'Example schemata' do
       expect(subject.length).to eq(4)
     end
 
-    describe 'first' do
+    describe 'first (id)' do
       subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::IntegerProperty) }
 
-      it 'has a name' do
+      it 'is named "id"' do
         expect(subject.name).to eq('id')
       end
 
@@ -53,12 +53,12 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'second' do
+    describe 'second (name)' do
       subject { super().fetch(1) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
 
-      it 'has a name' do
+      it 'is named "name"' do
         expect(subject.name).to eq('name')
       end
 
@@ -75,7 +75,7 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'third' do
+    describe 'third (price)' do
       subject { super().fetch(2) }
 
       it { is_expected.to be_kind_of(Argo::NumberProperty) }
@@ -98,7 +98,7 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'fourth' do
+    describe 'fourth (tags)' do
       subject { super().fetch(3) }
 
       it { is_expected.to be_kind_of(Argo::ArrayProperty) }

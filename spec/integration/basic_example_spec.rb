@@ -26,7 +26,7 @@ RSpec.describe 'Example schemata' do
       expect(subject.length).to eq(3)
     end
 
-    describe 'first' do
+    describe 'first (firstName)' do
       subject { super().first }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
@@ -44,7 +44,7 @@ RSpec.describe 'Example schemata' do
       end
     end
 
-    describe 'last' do
+    describe 'last (age)' do
       subject { super().last }
 
       it { is_expected.to be_kind_of(Argo::IntegerProperty) }

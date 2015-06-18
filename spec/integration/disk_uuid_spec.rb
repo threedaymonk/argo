@@ -20,7 +20,7 @@ RSpec.describe 'diskUUID' do
       expect(subject.length).to eq(2)
     end
 
-    describe 'first' do
+    describe 'first (type)' do
       subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
@@ -33,12 +33,12 @@ RSpec.describe 'diskUUID' do
         expect(subject).to be_required
       end
 
-      it 'has constraints' do
+      it 'has an enum constraint' do
         expect(subject.constraints).to eq(enum: %w[ disk ])
       end
     end
 
-    describe 'second' do
+    describe 'second (label)' do
       subject { super().fetch(1) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
@@ -51,7 +51,7 @@ RSpec.describe 'diskUUID' do
         expect(subject).to be_required
       end
 
-      it 'has constraints' do
+      it 'has a pattern constraint' do
         expect(subject.constraints).to eq(
           pattern: '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
         )
