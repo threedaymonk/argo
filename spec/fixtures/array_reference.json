@@ -1,0 +1,20 @@
+{
+    "properties": {
+        "defendants": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/Defendant" },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    },
+    "definitions": {
+        "Defendant": {
+            "type": "object",
+            "properties": {
+                "defendant_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

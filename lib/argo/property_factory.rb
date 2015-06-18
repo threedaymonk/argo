@@ -44,7 +44,7 @@ module Argo
     end
 
     def explicit_class(body)
-      type = body['type']
+      type = body.fetch('type')
       raise "Unknown property type '#{type}'" unless TYPE_MAP.key?(type)
       TYPE_MAP.fetch(type)
     end
@@ -62,8 +62,14 @@ module Argo
     end
 
     def additional_properties_for_array(body)
-      factory = PropertyFactory.new(@dereferencer)
-      { items: factory.build('item', body['items']) }
+      items = body.fetch('items')
+      if items.key?('$ref')
+        value = @dereferencer.dereference(items.fetch('$ref'))
+      else
+        factory = PropertyFactory.new(@dereferencer)
+        value = factory.build('item', items)
+      end
+      { items: value }
     end
 
     def required?(name)
