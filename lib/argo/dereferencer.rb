@@ -6,7 +6,8 @@ module Argo
       @block = block
     end
 
-    def dereference(path)
+    def dereference(hash)
+      path = hash.fetch('$ref')
       fragments = path.split(/\//)
       unless fragments[0] == '#'
         raise "Can't dereference non-root-anchored path '#{path}'"
@@ -16,6 +17,10 @@ module Argo
           schema.schemas.fetch(fragment)
         }
       }
+    end
+
+    def dereferenceable?(hash)
+      hash.key?('$ref')
     end
   end
 end

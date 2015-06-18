@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'argo/array_property'
 require 'argo/boolean_property'
 require 'argo/integer_property'
@@ -7,6 +8,8 @@ require 'argo/string_property'
 
 module Argo
   class PropertyFactory
+    extend Forwardable
+
     NON_CONSTRAINT_PROPERTIES = %w[
       description
       items
@@ -26,6 +29,8 @@ module Argo
       @dereferencer = dereferencer
       @required_fields = required_fields
     end
+
+    def_delegators :@dereferencer, :dereference, :dereferenceable?
 
     def build(name, body)
       class_for_type(body).new(
@@ -63,8 +68,8 @@ module Argo
 
     def additional_properties_for_array(body)
       items = body.fetch('items')
-      if items.key?('$ref')
-        value = @dereferencer.dereference(items.fetch('$ref'))
+      if dereferenceable?(items)
+        value = dereference(items)
       else
         factory = PropertyFactory.new(@dereferencer)
         value = factory.build('item', items)
@@ -89,8 +94,8 @@ module Argo
     def symbolize_object(obj)
       case obj
       when Hash
-        if obj.key?('$ref')
-          @dereferencer.dereference(obj.fetch('$ref'))
+        if dereferenceable?(obj)
+          dereference(obj)
         else
           obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze
         end
