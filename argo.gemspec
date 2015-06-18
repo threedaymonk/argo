@@ -17,7 +17,6 @@ spec = Gem::Specification.new do |s|
   s.has_rdoc         = true
   s.extra_rdoc_files = %w[COPYING.txt]
   s.required_ruby_version = ">= 2.1.0"
-  s.add_dependency "lazy"
   s.add_development_dependency "rake", "~> 0"
   s.add_development_dependency "rspec", "~> 3.0.0"
   s.add_development_dependency "rubocop"

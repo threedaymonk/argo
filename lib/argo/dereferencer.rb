@@ -1,4 +1,4 @@
-require 'lazy'
+require 'argo/deferred_object'
 
 module Argo
   class Dereferencer
@@ -12,7 +12,7 @@ module Argo
       unless fragments[0] == '#'
         raise "Can't dereference non-root-anchored path '#{path}'"
       end
-      Lazy.promise {
+      DeferredObject.new {
         fragments.drop(1).inject(@block.call) { |schema, fragment|
           schema.schemas.fetch(fragment)
         }
