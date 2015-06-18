@@ -4,11 +4,10 @@ require 'json'
 RSpec.describe 'Core spec section 3.4 nested schema' do
   # See http://json-schema.org/latest/json-schema-core.html
 
-  let(:root) {
+  subject {
     path = read_fixture('core_nested_schema.json')
     Argo::Parser.new(JSON.parse(path)).root
   }
-  subject { root }
 
   it 'has a title' do
     expect(subject.title).to eq('root')
@@ -19,7 +18,7 @@ RSpec.describe 'Core spec section 3.4 nested schema' do
   end
 
   describe 'nested schema' do
-    subject { root.schemas['otherSchema'] }
+    subject { super().schemas.fetch('otherSchema') }
 
     it 'has a title' do
       expect(subject.title).to eq('nested')
@@ -28,17 +27,17 @@ RSpec.describe 'Core spec section 3.4 nested schema' do
     it 'knows its route' do
       expect(subject.route).to eq(%w[ otherSchema ])
     end
-  end
 
-  describe 'doubly nested schema' do
-    subject { root.schemas['otherSchema'].schemas['anotherSchema'] }
+    describe 'doubly nested schema' do
+      subject { super().schemas.fetch('anotherSchema') }
 
-    it 'has a title' do
-      expect(subject.title).to eq('alsoNested')
-    end
+      it 'has a title' do
+        expect(subject.title).to eq('alsoNested')
+      end
 
-    it 'knows its route' do
-      expect(subject.route).to eq(%w[ otherSchema anotherSchema ])
+      it 'knows its route' do
+        expect(subject.route).to eq(%w[ otherSchema anotherSchema ])
+      end
     end
   end
 

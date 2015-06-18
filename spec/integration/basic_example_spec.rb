@@ -4,11 +4,10 @@ require 'json'
 RSpec.describe 'Example schemata' do
   # See http://json-schema.org/examples.html
 
-  let(:root) {
+  subject {
     path = read_fixture('basic_example.json')
     Argo::Parser.new(JSON.parse(path)).root
   }
-  subject { root }
 
   it 'has a title' do
     expect(subject.title).
@@ -21,14 +20,14 @@ RSpec.describe 'Example schemata' do
   end
 
   describe 'properties' do
-    subject { root.properties }
+    subject { super().properties }
 
     it 'has three items' do
       expect(subject.length).to eq(3)
     end
 
     describe 'first' do
-      subject { root.properties.first }
+      subject { super().first }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
 
@@ -46,7 +45,7 @@ RSpec.describe 'Example schemata' do
     end
 
     describe 'last' do
-      subject { root.properties.last }
+      subject { super().last }
 
       it { is_expected.to be_kind_of(Argo::IntegerProperty) }
 

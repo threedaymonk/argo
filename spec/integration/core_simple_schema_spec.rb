@@ -4,11 +4,10 @@ require 'json'
 RSpec.describe 'Core spec section 3.4 simple schema' do
   # See http://json-schema.org/latest/json-schema-core.html
 
-  let(:root) {
+  subject {
     path = read_fixture('core_simple_schema.json')
     Argo::Parser.new(JSON.parse(path)).root
   }
-  subject { root }
 
   it 'has a title' do
     expect(subject.title).to eq('root')

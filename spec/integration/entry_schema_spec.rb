@@ -4,11 +4,10 @@ require 'json'
 RSpec.describe 'entry-schema' do
   # See http://json-schema.org/example2.html
 
-  let(:root) {
+  subject {
     path = read_fixture('entry-schema.json')
     Argo::Parser.new(JSON.parse(path)).root
   }
-  subject { root }
 
   it 'has a description' do
     expect(subject.description).
@@ -16,14 +15,14 @@ RSpec.describe 'entry-schema' do
   end
 
   describe 'properties' do
-    subject { root.properties }
+    subject { super().properties }
 
     it 'has four items' do
       expect(subject.length).to eq(4)
     end
 
     describe 'first' do
-      subject { root.properties[0] }
+      subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::ObjectProperty) }
 
@@ -37,7 +36,7 @@ RSpec.describe 'entry-schema' do
     end
 
     describe 'second' do
-      subject { root.properties[1] }
+      subject { super().fetch(1) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
 
@@ -55,7 +54,7 @@ RSpec.describe 'entry-schema' do
     end
 
     describe 'third' do
-      subject { root.properties[2] }
+      subject { super().fetch(2) }
 
       it { is_expected.to be_kind_of(Argo::ArrayProperty) }
 
@@ -64,7 +63,7 @@ RSpec.describe 'entry-schema' do
       end
 
       describe 'items' do
-        subject { root.properties[2].items }
+        subject { super().items }
 
         it { is_expected.to be_kind_of(Argo::StringProperty) }
       end
@@ -82,7 +81,7 @@ RSpec.describe 'entry-schema' do
     end
 
     describe 'fourth' do
-      subject { root.properties[3] }
+      subject { super().fetch(3) }
 
       it { is_expected.to be_kind_of(Argo::BooleanProperty) }
 

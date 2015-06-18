@@ -4,25 +4,24 @@ require 'json'
 RSpec.describe 'diskUUID' do
   # See http://json-schema.org/example2.html
 
-  let(:root) {
+  subject {
     path = read_fixture('diskUUID.json')
     Argo::Parser.new(JSON.parse(path)).root
   }
-  subject { root }
 
   it 'has no title' do
     expect(subject.title).to be_nil
   end
 
   describe 'properties' do
-    subject { root.properties }
+    subject { super().properties }
 
     it 'has two items' do
       expect(subject.length).to eq(2)
     end
 
     describe 'first' do
-      subject { root.properties[0] }
+      subject { super().fetch(0) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
 
@@ -40,7 +39,7 @@ RSpec.describe 'diskUUID' do
     end
 
     describe 'second' do
-      subject { root.properties[1] }
+      subject { super().fetch(1) }
 
       it { is_expected.to be_kind_of(Argo::StringProperty) }
 
