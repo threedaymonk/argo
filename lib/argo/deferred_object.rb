@@ -10,10 +10,14 @@ module Argo
 
     def initialize(&block)
       @__delegator_block__ = block
+      @__mutex__ = Mutex.new
     end
 
     def __getobj__
-      @__getobj__ ||= @__delegator_block__.call
+      @__mutex__.synchronize do
+        @__getobj__ ||= @__delegator_block__.call
+      end
+      @__getobj__
     end
   end
 end
