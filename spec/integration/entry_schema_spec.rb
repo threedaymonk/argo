@@ -75,8 +75,8 @@ RSpec.describe 'entry-schema' do
 
       it 'has constraints' do
         expect(subject.constraints).to eq(
-          minItems: 1,
-          uniqueItems: true
+          min_items: 1,
+          unique_items: true
         )
       end
     end

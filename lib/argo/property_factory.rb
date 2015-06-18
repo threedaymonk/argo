@@ -73,17 +73,21 @@ module Argo
     def constraints(hash)
       hash.
         reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.
-        map { |k, v| [k.to_sym, symbolize(v)] }.
+        map { |k, v| [symbolize_key(k), symbolize_object(v)] }.
         to_h.
         freeze
     end
 
-    def symbolize(obj)
+    def symbolize_key(k)
+      k.gsub(/[A-Z]/) { |m| "_#{m.downcase}" }.to_sym
+    end
+
+    def symbolize_object(obj)
       case obj
       when Hash
-        obj.map { |k, v| [k.to_sym, symbolize(v)] }.to_h.freeze
+        obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze
       when Array
-        obj.map { |v| symbolize(v) }.freeze
+        obj.map { |v| symbolize_object(v) }.freeze
       else
         obj.freeze
       end

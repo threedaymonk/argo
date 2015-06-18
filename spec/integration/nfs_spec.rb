@@ -72,7 +72,7 @@ RSpec.describe 'nfs' do
 
       it 'has constraints' do
         expect(subject.constraints).to eq(
-          oneOf: [
+          one_of: [
             { format: 'host-name' },
             { format: 'ipv4' },
             { format: 'ipv6' }
