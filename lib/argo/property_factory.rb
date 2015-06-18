@@ -22,7 +22,8 @@ module Argo
       'string' => StringProperty
     }
 
-    def initialize(required_fields = [])
+    def initialize(dereferencer, required_fields = [])
+      @dereferencer = dereferencer
       @required_fields = required_fields
     end
 
@@ -34,8 +35,6 @@ module Argo
         required: required?(name),
         **additional_properties(body)
       )
-    rescue => e
-      raise e, e.message + ' in ' + body.inspect
     end
 
   private
@@ -63,7 +62,8 @@ module Argo
     end
 
     def additional_properties_for_array(body)
-      { items: PropertyFactory.new.build('item', body['items']) }
+      factory = PropertyFactory.new(@dereferencer)
+      { items: factory.build('item', body['items']) }
     end
 
     def required?(name)
@@ -71,11 +71,9 @@ module Argo
     end
 
     def constraints(hash)
-      hash.
-        reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.
-        map { |k, v| [symbolize_key(k), symbolize_object(v)] }.
-        to_h.
-        freeze
+      symbolize_object(
+        hash.reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.to_h
+      )
     end
 
     def symbolize_key(k)
@@ -85,7 +83,11 @@ module Argo
     def symbolize_object(obj)
       case obj
       when Hash
-        obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze
+        if obj.key?('$ref')
+          @dereferencer.dereference(obj.fetch('$ref'))
+        else
+          obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze
+        end
       when Array
         obj.map { |v| symbolize_object(v) }.freeze
       else

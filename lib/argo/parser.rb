@@ -1,3 +1,4 @@
+require 'argo/dereferencer'
 require 'argo/schema_factory'
 
 module Argo
@@ -7,7 +8,13 @@ module Argo
     end
 
     def root
-      SchemaFactory.new.build(@source)
+      @root ||= SchemaFactory.new(dereferencer).build(@source)
+    end
+
+  private
+
+    def dereferencer
+      @dereferencer ||= Dereferencer.new { root }
     end
   end
 end

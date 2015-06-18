@@ -3,6 +3,10 @@ require 'argo/property_factory'
 
 module Argo
   class SchemaFactory
+    def initialize(dereferencer)
+      @dereferencer = dereferencer
+    end
+
     def build(subgraph, route = [])
       Schema.new(
         description: extract_one(subgraph, :description),
@@ -50,7 +54,7 @@ module Argo
 
     def properties(subgraph)
       required_fields = extract_one(subgraph, :required, default: [])
-      factory = PropertyFactory.new(required_fields)
+      factory = PropertyFactory.new(@dereferencer, required_fields)
       extract_one(subgraph, :properties, default: {}).
         map { |k, v| factory.build(k, v) }
     end

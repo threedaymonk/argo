@@ -33,6 +33,44 @@ RSpec.describe 'entry-schema' do
       it 'is required' do
         expect(subject).to be_required
       end
+
+      describe 'one_of constraint' do
+        subject { super().constraints.fetch(:one_of) }
+
+        it 'has four entries' do
+          expect(subject.length).to eq(4)
+        end
+
+        describe 'first' do
+          subject { super().fetch(0) }
+
+          it { is_expected.to be_kind_of(Argo::Schema) }
+
+          describe 'properties' do
+            subject { super().properties }
+
+            it 'has two items' do
+              expect(subject.length).to eq(2)
+            end
+
+            describe 'first' do
+              subject { super().fetch(0) }
+
+              it 'is named "type"' do
+                expect(subject.name).to eq('type')
+              end
+            end
+
+            describe 'second' do
+              subject { super().fetch(1) }
+
+              it 'is named "device"' do
+                expect(subject.name).to eq('device')
+              end
+            end
+          end
+        end
+      end
     end
 
     describe 'second' do
