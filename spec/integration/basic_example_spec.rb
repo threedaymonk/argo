@@ -5,8 +5,8 @@ RSpec.describe 'Example schemata' do
   # See http://json-schema.org/examples.html
 
   subject {
-    path = read_fixture('basic_example.json')
-    Argo::Parser.new(JSON.parse(path)).root
+    json = read_fixture('basic_example.json')
+    Argo::Parser.new(JSON.parse(json)).root
   }
 
   it 'has a title' do

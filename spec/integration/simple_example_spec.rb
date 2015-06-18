@@ -3,8 +3,8 @@ require 'json'
 
 RSpec.describe 'Example schemata' do
   subject {
-    path = read_fixture('simple_example.json')
-    Argo::Parser.new(JSON.parse(path)).root
+    json = read_fixture('simple_example.json')
+    Argo::Parser.new(JSON.parse(json)).root
   }
 
   it 'has a title' do

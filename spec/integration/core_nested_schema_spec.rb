@@ -5,8 +5,8 @@ RSpec.describe 'Core spec section 3.4 nested schema' do
   # See http://json-schema.org/latest/json-schema-core.html
 
   subject {
-    path = read_fixture('core_nested_schema.json')
-    Argo::Parser.new(JSON.parse(path)).root
+    json = read_fixture('core_nested_schema.json')
+    Argo::Parser.new(JSON.parse(json)).root
   }
 
   it 'has the title "root"' do

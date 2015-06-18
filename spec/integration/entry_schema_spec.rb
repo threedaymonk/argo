@@ -5,8 +5,8 @@ RSpec.describe 'entry-schema' do
   # See http://json-schema.org/example2.html
 
   subject {
-    path = read_fixture('entry-schema.json')
-    Argo::Parser.new(JSON.parse(path)).root
+    json = read_fixture('entry-schema.json')
+    Argo::Parser.new(JSON.parse(json)).root
   }
 
   it 'has a description' do
