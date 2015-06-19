@@ -1,4 +1,5 @@
 require 'forwardable'
+
 require 'argo/array_property'
 require 'argo/boolean_property'
 require 'argo/integer_property'
@@ -6,15 +7,11 @@ require 'argo/number_property'
 require 'argo/object_property'
 require 'argo/string_property'
 
+require 'argo/constraint_processor'
+
 module Argo
   class PropertyFactory
     extend Forwardable
-
-    NON_CONSTRAINT_PROPERTIES = %w[
-      description
-      items
-      type
-    ]
 
     TYPE_MAP = {
       'array' => ArrayProperty,
@@ -88,35 +85,7 @@ module Argo
     end
 
     def constraints(hash)
-      symbolize_object(
-        hash.reject { |k, _| NON_CONSTRAINT_PROPERTIES.include?(k) }.to_h
-      )
-    end
-
-    def symbolize_key(k)
-      k.gsub(/[A-Z]/) { |m| "_#{m.downcase}" }.to_sym
-    end
-
-    def symbolize_object(obj)
-      case obj
-      when Hash
-        symbolize_hash(obj)
-      when Array
-        obj.map { |v| symbolize_object(v) }.freeze
-      else
-        obj.freeze
-      end
-    end
-
-    def symbolize_hash(hash)
-      if reference?(hash)
-        dereference(hash)
-      else
-        hash.
-          map { |k, v| [symbolize_key(k), symbolize_object(v)] }.
-          to_h.
-          freeze
-      end
+      ConstraintProcessor.new(@dereferencer).process(hash)
     end
   end
 end
