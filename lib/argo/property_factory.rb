@@ -61,8 +61,6 @@ module Argo
         StringProperty
       elsif (body.keys & %w[ oneOf anyOf ]).any?
         ObjectProperty
-      else
-        nil
       end
     end
 
@@ -102,15 +100,22 @@ module Argo
     def symbolize_object(obj)
       case obj
       when Hash
-        if reference?(obj)
-          dereference(obj)
-        else
-          obj.map { |k, v| [symbolize_key(k), symbolize_object(v)] }.to_h.freeze
-        end
+        symbolize_hash(obj)
       when Array
         obj.map { |v| symbolize_object(v) }.freeze
       else
         obj.freeze
+      end
+    end
+
+    def symbolize_hash(hash)
+      if reference?(hash)
+        dereference(hash)
+      else
+        hash.
+          map { |k, v| [symbolize_key(k), symbolize_object(v)] }.
+          to_h.
+          freeze
       end
     end
   end
