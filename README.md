@@ -17,3 +17,5 @@ schema.description # => "schema for an fstab entry"
 schema.properties.keys # => ["storage", "fstype", "options", "readonly"]
 schema.properties['fstype'].constraints # => {:enum=>["ext3", "ext4", "btrfs"]}
 ```
+
+See `spec/integration` for more examples.
