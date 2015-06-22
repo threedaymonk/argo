@@ -14,8 +14,8 @@ RSpec.describe 'property reference' do
 
     it { is_expected.not_to be_required }
 
-    describe 'one_of constraint' do
-      subject { super().constraints.fetch(:one_of) }
+    describe 'enum constraint' do
+      subject { super().constraints.fetch(:enum) }
 
       it 'has one entry' do
         expect(subject.length).to eq(1)

@@ -89,7 +89,7 @@ module Argo
     def expand_schema_ref(body)
       {
         'type' => 'object',
-        'oneOf' => [body]
+        'enum' => [body]
       }
     end
 
