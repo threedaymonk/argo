@@ -30,39 +30,25 @@ module Argo
     def_delegators :@dereferencer, :dereference, :reference?
 
     def build(body, name: nil)
-      class_for_type(body).new(
-        constraints: constraints(body),
-        description: body['description'],
+      expanded = expand_implicit_body(body)
+      klass = class_for_type(expanded)
+      klass.new(
+        constraints: constraints(expanded),
+        description: expanded['description'],
         required: required?(name),
-        **additional_properties(body)
+        **additional_properties(klass, expanded)
       )
     end
 
   private
 
     def class_for_type(body)
-      klass = explicit_class(body) || implicit_class(body)
-      raise "No type found in #{body.inspect}" unless klass
-      klass
-    end
-
-    def explicit_class(body)
-      return nil unless body.key?('type')
       type = body.fetch('type')
-      raise "Unknown property type '#{type}'" unless TYPE_MAP.key?(type)
       TYPE_MAP.fetch(type)
     end
 
-    def implicit_class(body)
-      if body.key?('enum')
-        StringProperty
-      elsif (body.keys & %w[ oneOf anyOf ]).any?
-        ObjectProperty
-      end
-    end
-
-    def additional_properties(body)
-      if class_for_type(body) == ArrayProperty
+    def additional_properties(klass, body)
+      if klass == ArrayProperty
         additional_properties_for_array(body)
       else
         {}
@@ -86,6 +72,35 @@ module Argo
 
     def constraints(hash)
       ConstraintProcessor.new(@dereferencer).process(hash)
+    end
+
+    def expand_implicit_body(body)
+      if body.key?('$ref')
+        expand_schema_ref(body)
+      elsif (body.keys & %w[ oneOf anyOf ]).any?
+        expand_implicit_object(body)
+      elsif body.key?('enum')
+        expand_implicit_enum(body)
+      else
+        body
+      end
+    end
+
+    def expand_schema_ref(body)
+      {
+        'type' => 'object',
+        'constraints' => {
+          'oneOf' => [body]
+        }
+      }
+    end
+
+    def expand_implicit_enum(body)
+      { 'type' => 'string' }.merge(body)
+    end
+
+    def expand_implicit_object(body)
+      { 'type' => 'object' }.merge(body)
     end
   end
 end
