@@ -89,9 +89,7 @@ module Argo
     def expand_schema_ref(body)
       {
         'type' => 'object',
-        'constraints' => {
-          'oneOf' => [body]
-        }
+        'oneOf' => [body]
       }
     end
 

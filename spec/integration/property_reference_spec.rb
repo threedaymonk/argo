@@ -10,7 +10,33 @@ RSpec.describe 'property reference' do
   describe 'a' do
     subject { super().properties.fetch('a') }
 
-    it { is_expected.to be_kind_of(Argo::Schema) }
+    it { is_expected.to be_kind_of(Argo::ObjectProperty) }
+
+    it { is_expected.not_to be_required }
+
+    describe 'one_of constraint' do
+      subject { super().constraints.fetch(:one_of) }
+
+      it 'has one entry' do
+        expect(subject.length).to eq(1)
+      end
+
+      describe 'first' do
+        subject { super().fetch(0) }
+
+        it { is_expected.to be_kind_of(Argo::Schema) }
+
+        describe 'properties' do
+          subject { super().properties }
+
+          describe 'type' do
+            subject { super().fetch('type') }
+
+            it { is_expected.to be_kind_of(Argo::StringProperty) }
+          end
+        end
+      end
+    end
   end
 
   describe 'b' do

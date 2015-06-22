@@ -10,8 +10,6 @@ module Argo
       @dereferencer = dereferencer
     end
 
-    def_delegators :@dereferencer, :dereference, :reference?
-
     def build(subgraph, route = [])
       Schema.new(
         description: extract_one(subgraph, :description),
@@ -62,9 +60,7 @@ module Argo
       required_fields = extract_one(subgraph, :required, default: [])
       factory = PropertyFactory.new(@dereferencer, required_fields)
       extract_one(subgraph, :properties, default: {}).
-        map { |k, v|
-          [k, reference?(v) ? dereference(v) : factory.build(v, name: k)]
-        }.
+        map { |k, v| [k, factory.build(v, name: k)] }.
         to_h
     end
   end
